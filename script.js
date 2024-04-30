@@ -17,13 +17,20 @@ let firstPlayer = true;
 let secondPlayer = false;
 const gameBoard = document.querySelector(".game-board");
 
+
+const winner = document.querySelector(".winner-container");
 twoPlayer.addEventListener('click', function () {
+     restartGame() ; //when user clicks the button we either restart
      gameBoard.classList.add("active");
+     winner.innerHTML = '<p> Player 1 , make a move !'
+     
 })
 
 playerComputer.addEventListener('click', function () {
-    gameBoard.classList.add("active");
+    restartGame();
+    gameBoard.classList.add("active"); //to show game board
     computerPlayerMode = true;//on computer VS player mode make the boolean as true so that every time after first player move we can automatically make computer move
+    winner.innerHTML = '<p> Player 1 make a move ! </p>'
 
 })
 let totalMoves =0;
@@ -34,19 +41,22 @@ gridCells.forEach((gridCell, index) => {
                 initialGrid[index] = "X";
                 totalMoves+=1;
                 gridCell.textContent = initialGrid[index];
+             
                 firstPlayer = false;
                 secondPlayer = true;
                 if(computerPlayerMode == true)  //if its computer mode then , once first player plays , the computer move has to play
                 {
                    makeComputerMove();
-
+                   return;
                 }
+                winner.innerHTML = '<p> Player 2 , make a move ! </p>'
             }
             else if (secondPlayer == true) { 
                 secondPlayer = false;
                 firstPlayer = true; 
                 initialGrid[index] = "O";
                 totalMoves+=1;
+                winner.innerHTML = '<p> Player 1 , make a move ! </p>'
                 gridCell.textContent = initialGrid[index];  
                             
             }
@@ -69,6 +79,7 @@ function makeComputerMove(){
        initialGrid[move] = "O";
        totalMoves+=1;
        gridCells[move].textContent = initialGrid[move];
+       winner.innerHTML = '<p> Player 1 , make a move ! </p>'
        if(totalMoves >= 5) // technically a player can win after 5 moves , like player 1 shld make 3 moves to win but by the time the player1 makes (its)3rd move  the other player would have played 2 moves
        {
           displayWinner();
@@ -123,20 +134,38 @@ function randomPosition(){
     return null;
 }
 
-const winner = document.querySelector(".winner-container");
 function displayWinner(){
     for(let i=0;i<winningCondition.length;i++)
     {
         const [first,second,third] = winningCondition[i];
         if(initialGrid[first]===initialGrid[second] && initialGrid[second] === initialGrid[third] && initialGrid[first] === "X")
         {
-            winner.innerHTML='<p> Congragulation Player 1 won the match </p>';
+            winner.innerHTML='<p> Congratulation Player 1 won the match </p>';
             break;
         }
         else if(initialGrid[first]===initialGrid[second] && initialGrid[second] === initialGrid[third] && initialGrid[first] === "O"){
-            winner.innerHTML='<p> Congragulation ' + (computerPlayerMode ? 'Computer' : 'Player 2' ) +' won the match </p>';
+            winner.innerHTML='<p> Congratulation ' + (computerPlayerMode ? 'Computer' : 'Player 2' ) +' won the match </p>';
             break;
+        }
+        else{
+            let empty = initialGrid.filter(grid=>grid != "").length;
+            if(empty == initialGrid.length)
+            {
+                winner.innerHTML='<p> Player , No moves</p>';
+
+            }
         }
     }
     return null;
+}
+
+function restartGame(){
+    initialGrid = ["", "", "", "", "", "", "", "", ""];
+    gridCells.forEach((grid)=>{
+        grid.textContent="";
+    })
+     computerPlayerMode = false;
+    firstPlayer = true;
+    secondPlayer = false;
+
 }

@@ -150,10 +150,9 @@ function displayWinner(){
             winner.innerHTML='<p> Congratulation ' + (computerPlayerMode ? 'Computer' : 'Player 2' ) +' won the match </p>';
             break;
         }else{
-            if(empty == initialGrid.length)
-                {
+            if(empty == initialGrid.length){
                     winner.innerHTML='<p> Player , No moves</p>';
-                }
+            }
         }
     }
     return null;

@@ -149,8 +149,12 @@ function displayWinner(){
         else if(initialGrid[first]===initialGrid[second] && initialGrid[second] === initialGrid[third] && initialGrid[first] === "O"){
             winner.innerHTML='<p> Congratulation ' + (computerPlayerMode ? 'Computer' : 'Player 2' ) +' won the match </p>';
             break;
+        }else{
+            if(empty == initialGrid.length)
+                {
+                    winner.innerHTML='<p> Player , No moves</p>';
+                }
         }
-   
     }
     return null;
 }

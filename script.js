@@ -16,6 +16,7 @@ let computerPlayerMode = false;
 let firstPlayer = true;
 let secondPlayer = false;
 const gameBoard = document.querySelector(".game-board");
+const reset = document.querySelector(".reset");
 
 
 const winner = document.querySelector(".winner-container");
@@ -138,6 +139,8 @@ function displayWinner(){
     for(let i=0;i<winningCondition.length;i++)
     {
         const [first,second,third] = winningCondition[i];
+        let empty = initialGrid.filter(grid=>grid != "").length;
+       
         if(initialGrid[first]===initialGrid[second] && initialGrid[second] === initialGrid[third] && initialGrid[first] === "X")
         {
             winner.innerHTML='<p> Congratulation Player 1 won the match </p>';
@@ -147,14 +150,7 @@ function displayWinner(){
             winner.innerHTML='<p> Congratulation ' + (computerPlayerMode ? 'Computer' : 'Player 2' ) +' won the match </p>';
             break;
         }
-        else{
-            let empty = initialGrid.filter(grid=>grid != "").length;
-            if(empty == initialGrid.length)
-            {
-                winner.innerHTML='<p> Player , No moves</p>';
-
-            }
-        }
+   
     }
     return null;
 }
@@ -164,8 +160,14 @@ function restartGame(){
     gridCells.forEach((grid)=>{
         grid.textContent="";
     })
-     computerPlayerMode = false;
+    computerPlayerMode = false;
     firstPlayer = true;
     secondPlayer = false;
+    winner.innerHTML=""
 
 }
+
+reset.addEventListener('click',(event)=>{
+    restartGame();
+    gameBoard.classList.remove("active"); 
+})

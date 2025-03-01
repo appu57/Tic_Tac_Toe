@@ -14,7 +14,11 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    position: relative;
+}
+
+.container__wrapper{
+    display: flex;justify-content: center;
+    align-items: center;
 }
 
 .start-container{
@@ -28,6 +32,7 @@ body{
 
 .selection-container{
     margin-top: 20px;
+    display: flex;
 }
 
 
@@ -97,4 +102,9 @@ h2{
     color: lawngreen ;
     letter-spacing: 1px;
     font-style: italic;
+}
+
+.reset__container{
+    position: absolute;
+    bottom: 10px;
 }
